@@ -1,4 +1,4 @@
-import Transcribe from './Transcribe';
+import Transcribe from './pages/Transcribe';
 import './App.css';
 
 function App() {
