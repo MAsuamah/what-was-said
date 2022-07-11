@@ -84,7 +84,7 @@ function Transcribe() {
           <Col lg={4} id="upload-intro" className="scroll">
             <header><h1 className="title">Write-Out</h1></header>
             <p id="para">
-              Transcribe your audio files with Write-out. <br/> Write-out uses the <a href="https://www.assemblyai.com/" target="_blank" rel="noreferrer">Assembly AI API</a> to quickly convert audio and video to text. Click <a href="https://www.assemblyai.com/docs#supported-file-types" target="_blank" rel="noreferrer">here</a> to see which files types are supported by Assembly AI.
+              Transcribe your audio files with Write-out. <br/> Write-out uses the <a href="https://www.assemblyai.com/" target="_blank" rel="noreferrer">Assembly AI API</a> to quickly convert audio and video to text. Click <a href="https://www.assemblyai.com/docs#supported-file-types" target="_blank" rel="noreferrer">here</a> to see which file types are supported by Assembly AI.
             </p>
             <Form.Group controlId="formFileLg" className="mb-3">
               <Form.Control type="file" size="lg" onChange={(event) => setAudioUpload(event.target.files[0])} />
