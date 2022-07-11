@@ -38,21 +38,26 @@ function Transcribe() {
       const checkCompletionInterval = setInterval(async () => {
         const transcript = await assembly.get(`/transcript/${response.data.id}`);
         const transcriptStatus = transcript.data.status;
-  
-        if (transcriptStatus !== "completed") {
+
+        if(transcriptStatus === "error") {
           console.log(`Transcript Status: ${transcriptStatus}`);
-          if(transcriptStatus === "error") {
-            setIsLoading(false);
-            setTranscript(`Error: ${transcript.data.error}`)
-            return;
-          }
-        } else if (transcriptStatus === "completed") {
+          setIsLoading(false);
+          let transcriptError = transcript.data.error;
+          setTranscript(`Error: ${transcriptError}`)
+          clearInterval(checkCompletionInterval);
+        }
+        
+        else if (transcriptStatus === "completed") {
           console.log("\nTranscription completed!\n");
+          setIsLoading(false);
           let transcriptText = transcript.data.text;
           setTranscript(transcriptText);
           clearInterval(checkCompletionInterval);
-          setIsLoading(false);
         }
+
+        else {
+          console.log(`Transcript Status: ${transcriptStatus}`);
+        } 
       }, refreshInterval);
     }
     getTranscript();
