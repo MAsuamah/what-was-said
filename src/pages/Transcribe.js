@@ -15,12 +15,14 @@ function Transcribe() {
   const [isLoading, setIsLoading] = useState(false);
   const [errMessage, setErrMessage] = useState('');
 
+  //Get transcript using url from firebase
   const generateTranscript = (url) => {
     const axios = require("axios");
     const audioURL = url;
     const APIKey = process.env.REACT_APP_API_KEY;
     const refreshInterval = 5000;
   
+    // Setting up the AssemblyAI headers
     const assembly = axios.create({
       baseURL: "https://api.assemblyai.com/v2",
       headers: {
@@ -30,6 +32,7 @@ function Transcribe() {
     });
   
     const getTranscript = async () => {
+      // Sends the audio file to AssemblyAI for transcription
       const response = await assembly.post("/transcript", {
         audio_url: audioURL,
       });
@@ -39,6 +42,7 @@ function Transcribe() {
         const transcript = await assembly.get(`/transcript/${response.data.id}`);
         const transcriptStatus = transcript.data.status;
 
+        //Error Handling
         if(transcriptStatus === "error") {
           console.log(`Transcript Status: ${transcriptStatus}`);
           setIsLoading(false);
@@ -63,6 +67,7 @@ function Transcribe() {
     getTranscript();
   }
 
+  
   const uploadAudio = () => {
     if(audioUpload === null) {
       setErrMessage('Please Select a File!');
@@ -73,6 +78,7 @@ function Transcribe() {
     setTranscript('');
     setErrMessage('');
 
+    //Upload selected file to firebase storage and get url
     const audioRef = ref(storage, `${audioUpload + v4()}`);
 
     uploadBytes(audioRef, audioUpload).then(() => {
